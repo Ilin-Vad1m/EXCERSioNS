@@ -1,0 +1,108 @@
+import java.util.ArrayList;
+
+
+public class Begin {
+    public static void main(String[] args) {
+        toArray toAr = new toArray();
+        toAr.swapAr();
+        toAr.addAr();
+        
+        Apple apl = new Apple();
+        Orange orange = new Orange();
+
+        Box<Apple> boxApple = new Box<Apple>();
+        Box<Orange> boxOrange = new Box<Orange>();
+        boxApple.addFruit(apl);
+        boxApple.addFruit(apl);
+        boxApple.addFruit(apl);
+        boxOrange.addFruit(orange);
+        boxOrange.addFruit(orange);
+        boxOrange.addFruit(orange);
+        boxOrange.addFruit(orange);
+        boxOrange.addFruit(orange);
+
+        boxApple.compare(boxOrange);
+    }
+}
+
+class toArray(){
+
+    public void swapAr() {
+
+        Integer[] iArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+        Double[] dArray = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 0.0};
+        String[] sArray = {" one ", " two ", " three ", " four ", " five ", " six ", " seven "};
+        try {
+            swapTwoElementsInArray(iArray, 0, 2);
+            swapTwoElementsInArray(dArray, 0, 2);
+            swapTwoElementsInArray(sArray, 0, 2);
+        } catch (WrongPositionException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Swap result in integer array: " + Arrays.toString(iArray));
+        System.out.println("Swap result in double array: " + Arrays.toString(dArray));
+        System.out.println("Swap result in string array: " + Arrays.toString(sArray));
+    }
+
+    public void addAr() {
+        Integer[] iArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+        Double[] dArray = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 0.0};
+        String[] sArray = {"one", "two", "three", "four", "five"};
+        arrayToArrayList(iArray);
+        arrayToArrayList(dArray);
+        arrayToArrayList(sArray);
+        System.out.println(Arrays.toString(iArray));
+        System.out.println(Arrays.toString(dArray));
+        System.out.println(Arrays.toString(sArray));
+    }
+}
+
+class Apple extends Fruit{
+    public Apple() {
+        super.weigth = 1f;
+    }
+
+}
+
+class Orange extends Fruit{
+    public Orange() {
+        super.weigth = 1.5f;
+    }
+}
+
+class Fruit {
+    float weigth;
+}
+
+class Box<T>{
+    private boolean isFree = true;
+    float maxWeight = 100.0f;
+    float currentWeight = 0;
+    ArrayList<T> arrayList;
+
+    void addFruit(T fruit) {
+        if (currentWeight + 1 <= maxWeight) {
+            arrayList.add(fruit);
+            currentWeight++;
+            if (arrayList.size() < 1)
+                isFree = false;
+        } else
+            System.out.println("The box is full");
+    }
+
+    float getWeight(Fruit f) {
+        return arrayList.size() * f.weigth;
+    }
+
+    boolean compare(Fruit f1, Fruit f2) {
+        if (getWeight(f1) == getWeight(f2)) {
+            return true;
+        } else return false;
+    }
+
+    public boolean compare(Box box) {
+        if (currentWeight == box.currentWeight)
+            return true;
+        return false;
+    }
+}
